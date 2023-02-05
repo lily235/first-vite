@@ -12,10 +12,12 @@ function validURL(str) {
     return !!pattern.test(str);
   }
   
-  function generateURL(str) {
-    return str.slice(3);
+function generateURL() {
+    let r = (Math.random() + 1).toString(36).substring(7);
+    return "https://shortest.url/"+r;
   }
-  let nextId = 0;
+
+let nextId = 0;
 
 export default function App(){
     const [isSubmited,setIsSubmited] = useState(false);
@@ -28,7 +30,7 @@ export default function App(){
                 alert("already have one!");
                 setUrlInput('');
             }else{
-            let shortUrl=generateURL(urlInput);
+            let shortUrl=generateURL();
             setUrlMappings([
                 ...urlMappings,
                 { id: nextId++, url: urlInput, shortUrl:shortUrl}
@@ -36,16 +38,15 @@ export default function App(){
             setIsSubmited(!isSubmited);
             setUrlInput(shortUrl);
             console.log(urlMappings);
-}
+            }
         } else {
             alert('!please enter a URL!');
             setUrlInput('');
             console.log(urlMappings);
         }
-       
     }
 
-    function handleCope(){
+    function handleCopy(){
         alert('copy success!');
         setIsSubmited(!isSubmited);
         setUrlInput('');
@@ -58,8 +59,9 @@ export default function App(){
     return (
         <>
         <h1>YOUR SHORTENED LINK:</h1>
-        <input className='url' placeholder='PASTE URL,SHORTEN & SHARE' value={urlInput} onChange={handleUrlInput}/>
-        <button onClick={isSubmited?handleCope:handleShorten}>{isSubmited?"COPY":"SHORTEN"}</button>
+        <input className='url' placeholder='PASTE URL,SHORTEN & SHARE' value={urlInput} onChange={handleUrlInput} disabled={isSubmited}/>
+        <button onClick={isSubmited?handleCopy:handleShorten}>{isSubmited?"COPY":"SHORTEN"}</button>
+       {isSubmited?(<p>View info & stats at <a href={urlInput}>{urlInput}</a></p>):(<p>Shortest.url is a Free URL shortener.</p>)}
         </>
     )
 }

@@ -47,7 +47,11 @@ export default function App(){
     }
 
     function handleCopy(){
-        alert('copy success!');
+        
+        navigator.clipboard.writeText(urlInput).then(function(x){
+            alert("Link copied to clipboard: " + urlInput);
+        })
+        
         setIsSubmited(!isSubmited);
         setUrlInput('');
     }

@@ -46,7 +46,7 @@ export default function App(){
     }
 
     function handleCope(){
-        alert('cope');
+        alert('copy success!');
         setIsSubmited(!isSubmited);
         setUrlInput('');
     }
